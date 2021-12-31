@@ -1,13 +1,76 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+*{
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  background: #F4F2FF;
+  margin: auto;
+  padding:0 100px;
+  font-family: Inter;
+}
+
+.btn {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  color: #6E6893;
+  text-align: center;
+  border-bottom: 2px solid transparent;
+  text-transform: capitalize;
+  padding:0 10px 10px 10px;
+}
+
+.active {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #25213B;
+  border-bottom: 2px solid #25213B;
+}
+
+
+input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+
+.active-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  background: #E6E6F2;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #4A4AFF;
+  width: 58px;
+  height: 19px;
+}
+
+.active-status > p {
+  height: 6px;
+  width: 6px;
+  background: #4A4AFF;
+  border-radius: 9999px;
+}
+
+.inactive-status {
+  color:#6E6893;
+  background: #F2F0F9;
+}
+
+.inactive-status > p {
+  background: #6E6893;
+}
+
+.last-login {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #6E6893;
 }
