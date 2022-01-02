@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-const Options = () => {
+const Options = ({ i }) => {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
     const toggleOptions = () => {
-        setIsOptionsOpen(!isOptionsOpen)
+        if(i === 0) {
+            setIsOptionsOpen(!isOptionsOpen)
+
+        }
     }
 
     return (
@@ -34,9 +37,8 @@ const Options = () => {
 const ViewMoreModal = styled.div`
     position: absolute;
     width: 154px;
-    /* height: 129px; */
-    left: 15px;
-    top: 12px;
+    right: 5px;
+    top:0;
     padding:10px 5px;
     background: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);

@@ -40,23 +40,24 @@ input[type="checkbox"] {
 .active-status {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 5px;
   text-transform: capitalize;
   background: #E6E6F2;
   border-radius: 10px;
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  color: #4A4AFF;
-  width: 58px;
-  height: 19px;
+  padding:2px 5px;
+  pointer-events: none;
 }
 
-.active-status > p {
-  height: 6px;
-  width: 6px;
-  background: #4A4AFF;
-  border-radius: 9999px;
+
+.active-status > h3 {
+ font-weight: 500;
+ font-size: 12px;
+ line-height: 15px;
+ color: #4A4AFF;
+}
+
+.inactive-status > h3 {
+  color:#6E6893;
 }
 
 .inactive-status {
@@ -64,8 +65,19 @@ input[type="checkbox"] {
   background: #F2F0F9;
 }
 
+.active-status > p {
+  height: 6px;
+  width: 6px;
+  background: #4A4AFF;
+  border-radius: 100%;
+}
+
 .inactive-status > p {
+  height: 6px;
+  width: 6px;
   background: #6E6893;
+  border-radius: 100%;
+
 }
 
 .last-login {
@@ -73,4 +85,123 @@ input[type="checkbox"] {
   font-size: 12px;
   line-height: 15px;
   color: #6E6893;
+  margin-top: 5px;
+}
+
+.last-login span {
+  text-transform: uppercase;
+}
+
+/*  */
+
+
+.paid-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: capitalize;
+  background: #CDFFCD;
+  border-radius: 10px;
+  padding:2px 5px;
+  pointer-events: none;
+}
+
+.paid-status > p {
+  height: 6px;
+  width: 6px;
+  background: #007F00;
+  border-radius: 100%;
+}
+
+.paid-status > h3 {
+ font-weight: 500;
+ font-size: 12px;
+ line-height: 15px;
+ color: #007F00;
+}
+
+
+.overdue-status {
+  color:#D30000;
+  background: #FFE0E0;
+}
+.overdue-status > h3 {
+  color: #D30000;
+}
+.overdue-status > p {
+  height: 6px;
+  width: 6px;
+  background: #D30000;
+  border-radius: 100%;
+
+}
+
+.unpaid {
+  color:#965E00;
+  background: #FFECCC;
+}
+
+.unpaid > p {
+  height: 6px;
+  width: 6px;
+  background: #965E00;
+  border-radius: 100%;
+}
+
+.unpaid > h3 {
+  color:#965E00;
+}
+
+
+.pay-date {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  margin-top: 5px;
+  color: #25213B;
+}
+
+.pay-date span {
+  text-transform: uppercase;
+}
+
+
+
+
+.amount {
+  text-align: right;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: right;
+  text-transform: uppercase;
+  color: #25213B;
+}
+
+.amount p {
+  font-size: 12px;
+  line-height: 15px;
+  text-align: right;
+  letter-spacing: 0.05em;
+  color: #6E6893;
+  margin-top: 5px;
+
+}
+
+
+th{
+  text-align: left;
+}
+
+td, th {
+  padding: 12px 20px;
+}
+
+.upside {
+  transform: rotate(180deg);
+  transition: 0.5s;
+}
+
+.downside {
+  transition: 0.5s;
 }

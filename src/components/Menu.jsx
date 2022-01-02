@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import FilterModal from './FilterModal'
 import PayDues from './PayDues'
@@ -7,18 +7,22 @@ import SingleUser from './SingleUser'
 import TableHead from './TableHead'
 
 const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
+    const [checked, setChecked] = useState(false);
+
     return (
         <MenuContainer>
             <div className='flex justify-between items-center w-full px-5'>
                 <div className='flex gap-8'>
-                <FilterModal />
-                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+                    <FilterModal />
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                 </div>
                 <PayDues />
             </div>
-            
-            <TableHead />
-            <SingleUser listItem={listItem} />
+
+            <Table >
+                <TableHead setChecked={setChecked} checked={checked}/>
+                <SingleUser listItem={listItem} setChecked={setChecked} checked={checked}/>
+            </Table>
         </MenuContainer>
     )
 }
@@ -29,6 +33,11 @@ const MenuContainer = styled.section`
     background: #FFFFFF;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
+`
+
+const Table = styled.table`
+    margin-top: 16px;
+    width: 100%;
 `
 
 export default Menu;

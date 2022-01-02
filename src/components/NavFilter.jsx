@@ -62,13 +62,13 @@ const NavFilterContainer = styled.div`
         color: #6E6893;
     }
 
-    span {
+    /* span {
         font-weight: 700;
         font-size: 18px;
         line-height: 17px;
         color: #6D5BD0;
         
-    }
+    } */
 `
 
 const DFlexer = styled.div`

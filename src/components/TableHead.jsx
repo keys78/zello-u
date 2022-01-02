@@ -2,42 +2,48 @@ import React from 'react'
 import styled from 'styled-components'
 import { tableHeading } from '../data'
 
-const TableHead = () => {
+const TableHead = ({ setChecked, checked }) => {
     const renderTableHeading = tableHeading.map((table, i) => (
-        <div key={i}>
-            <h1>{table.title}</h1>
-        </div>
+        <th key={i}>{table.title}</th>
     ))
+
+
     return (
-        <TableHeadContainer >
-            <TableGrid className='mx-5'>
-                <input type="checkbox" />
+        <thead>
+            <TableHeadContainer >
+                <th className='flex items-center'>
+                    <input type="checkbox" checked={checked}
+                        onChange={() => { setChecked(!checked) }}
+                    />
+                </th>
                 {renderTableHeading}
-                <img src="./assets/More.png" alt="morebtn" />
-            </TableGrid>
-        </TableHeadContainer>
+                <th className='flex items-center justify-end'> <img src="./assets/More.png" alt="morebtn" /></th>
+            </TableHeadContainer>
+        </thead>
     )
 }
 
-const TableHeadContainer = styled.div`
-    margin-top: 16px;
+const TableHeadContainer = styled.tr`
     background: #F4F2FF;
-    padding:15px 0;
-`
+    border:1px solid #D9D5EC;
 
-const TableGrid = styled.div`
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    align-items: center;
-    justify-content: center;
-
-    h1 {
+    th {
         font-weight: 600;
         font-size: 15px;
         line-height: 15px;
         letter-spacing: 0.05em;
         color: #6E6893;
+
+        &:nth-child(3) {
+           padding-right:206px;
+        }
+        &:nth-child(5) {
+            text-align: right;
+        }
     }
+   
 `
+
+
 
 export default TableHead
