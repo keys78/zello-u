@@ -9,8 +9,23 @@ export const usersApi = createApi({
         getUsers: builder.query({
             query: () => `/users/O6Jd07x7M09NkSl`
         }),
+
+        activateUser: builder.mutation({
+            query: ({id, ...rest}) => ({
+                url: `/activate-user/${id}`,
+                method: 'PUT',
+                body: rest
+            })
+        }),
+
+        deleteUser: builder.mutation({
+            query: (id) => ({
+                url: `/remove-user/${id}`,
+                method: 'DELETE',
+            })
+        }),
        
     })
 });
 
-export const { useGetUsersQuery } = usersApi;
+export const { useGetUsersQuery, useDeleteUserMutation } = usersApi;

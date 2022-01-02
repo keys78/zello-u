@@ -25,7 +25,8 @@ const TableHead = ({ setChecked, checked }) => {
 
 const TableHeadContainer = styled.tr`
     background: #F4F2FF;
-    border:1px solid #D9D5EC;
+    border-top:1px solid #D9D5EC;
+    border-bottom:1px solid #D9D5EC;
 
     th {
         font-weight: 600;
