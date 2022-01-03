@@ -1,20 +1,40 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Pagination = () => {
+const Pagination = ({ usersPerPage, totalUsers, first, last, paginate}) => {
+    const pageNumbers = [];
+
+    for(let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
+        pageNumbers.push(i)
+    }
     return (
         <PaginationCont>
             <div className='flex gap-12'>
                 <div className='flex items-center gap-3'>
-                    <p>Row per page : 10</p>
+                    <p>Rows per page : {usersPerPage}</p>
                     <img src="./assets/drop.png" alt="drop-down" />
                 </div>
-                <div>1 - 10 of 276 </div>
+                <div>{first + 1} - {last} of {totalUsers} </div>
                 <div className='flex gap-2 items-center' >
-                    <img src="./assets/chevron-left.png" alt="chev-left" />
-                    <img src="./assets/chevron-right.png" alt="chev-right" />
+                    <img  src="./assets/chevron-left.png" alt="chev-left" />
+                    
                 </div>
             </div>
+            <ul>
+                {pageNumbers.map(number => (
+                    <li key={number}>
+                        <img onClick={() => paginate(number)} src="./assets/chevron-left.png" alt="chev-left" />
+                        <img  onClick={() => paginate(number)} src="./assets/chevron-right.png" alt="chev-right" />
+
+                        {/* <a  href="#">{number}</a> */}
+                    </li>
+                ))}
+                {/* {pageNumbers.map(number => (
+                    <li key={number}>
+                        <a onClick={() => paginate(number)} href="#">{number}</a>
+                    </li>
+                ))} */}
+            </ul>
 
         </PaginationCont>
     )

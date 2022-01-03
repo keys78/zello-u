@@ -12,15 +12,12 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
     }
     const [activeCheck, setActiveCheck] = useState()
 
-    const onChange = (value) => {
-        activeCheck === value ? setActiveCheck('') : setActiveCheck(value)
-        if (activeCheck === value) {
-            setActiveCheck('')
-            setChecked(!checked)
-        } else {
-            setActiveCheck(value)
-            setChecked(!checked)
-        }
+    // const [checkedId, setCheckedId] = useState(listItem.map((user) => user.id))
+    // console.log(checkedId)
+
+    const handleChecked = (user, e, i) => {
+        activeCheck === i ? setActiveCheck('') : setActiveCheck(i)
+
     }
 
 
@@ -32,8 +29,9 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
                         <TableRow key={i}>
                             <td>
                                 <div className='flex gap-5 items-center'>
-                                    <input type="checkbox" checked={checked}
-                                        onChange={() => onChange(i)}
+                                    <input type="checkbox"
+                                        checked={activeCheck === i ? checked : ""}
+                                        onChange={(e) => handleChecked(user, e, i)}
                                     />
                                     <img className={`${activeIndex === i ? "upside" : "downside"}`} src="./assets/down.png" alt="morebtn" />
                                 </div>
@@ -70,7 +68,7 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
                             <td >
                                 <div className='flex gap-7 justify-end items-center'>
                                     <ViewMoreBtn onClick={() => toggleViewMore({ i })}>View More</ViewMoreBtn>
-                                    <Options i={i} />
+                                    <Options user={user} i={i} />
                                 </div>
 
                             </td>
@@ -78,10 +76,10 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
                         </TableRow>
 
                         <tr className={`${activeIndex === i ? "table-row" : "hidden"}`}>
-                            <td colspan="6">
+                            <td colSpan="6">
                                 <div >
                                     {user.activities.map((activity, i) =>
-                                        <ViewMore activity={activity} i={i} />
+                                        <ViewMore key={i} activity={activity} i={i} />
                                     )}
                                 </div>
                             </td>

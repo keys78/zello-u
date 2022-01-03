@@ -10,6 +10,7 @@ const NavFilter = () => {
     const allUsers = isSuccess && data?.data
     const allCategories = ['All', 'paid', 'unpaid', 'overdue'];
 
+
     const [listItem, setListItem] = useState(allUsers);
     const [buttons, setButtons] = useState(allCategories);
     const [searchTerm, setSearchTerm] = useState('')

@@ -12,8 +12,9 @@ const TableHead = ({ setChecked, checked }) => {
         <thead>
             <TableHeadContainer >
                 <th className='flex items-center'>
-                    <input type="checkbox" checked={checked}
-                        onChange={() => { setChecked(!checked) }}
+                    <input type="checkbox" 
+                    // checked={checked}
+                        // onChange={() => { setChecked(!checked) }}
                     />
                 </th>
                 {renderTableHeading}

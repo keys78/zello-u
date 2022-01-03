@@ -1,9 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useMarkPaidMutation } from '../services/usersApi'
 
-const PayDues = () => {
+const PayDues = ({ checked }) => {
+    const [markPaid] = useMarkPaidMutation()
+
+    const handlePaid = async() => {
+        // await markPaid(user.id)
+        if(checked) {
+            console.log('paid')
+        }
+    }
+
     return (
-        <DuesBtn>
+        <DuesBtn onClick={handlePaid}>
             <h1>PAY DUES</h1>
         </DuesBtn>
     )

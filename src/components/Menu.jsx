@@ -8,7 +8,18 @@ import SingleUser from './SingleUser'
 import TableHead from './TableHead'
 
 const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState( );
+
+    // const [users, setUsers] = useState(listItem)/
+    // const [loading, setLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [usersPerPage, setUsersPerPage] = useState(5);
+
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = listItem && listItem.slice(indexOfFirstUser, indexOfLastUser)
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     return (
         <MenuContainer>
@@ -17,14 +28,21 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
                     <FilterModal />
                     <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                 </div>
-                <PayDues />
+                <PayDues checked={checked}/>
             </div>
 
             <Table >
                 <TableHead setChecked={setChecked} checked={checked}/>
-                <SingleUser listItem={listItem} setChecked={setChecked} checked={checked}/>
+                <SingleUser listItem={currentUsers} setChecked={setChecked} checked={checked}/>
             </Table>
-            <Pagination />
+            <Pagination paginate={paginate}
+             usersPerPage={usersPerPage}
+              totalUsers={listItem && listItem.length} 
+              currentPage={currentPage}
+              listItem={listItem}
+              first={indexOfFirstUser}
+              last={indexOfLastUser}
+              />
         </MenuContainer>
     )
 }

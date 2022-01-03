@@ -1,14 +1,26 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useDeactivateUserMutation, useActivateUserMutation, useGetUsersQuery } from '../services/usersApi'
 
-const Options = ({ i }) => {
+const Options = ({ user, i }) => {
+    const [deactivateUser] = useDeactivateUserMutation({id: user.id});
+    const [activateUser] = useActivateUserMutation({id: user.id});
+    const { refetch } = useGetUsersQuery()
+
+    const handleDeactivateUser = async() => {
+        user.userStatus === "active" ? await deactivateUser(user.id) : await activateUser(user.id)
+        refetch();
+        console.log(user.id)
+    }
+    const singleUserStatus = user.userStatus === "active" ? "Deactivate User" : "Activate User"
+
+
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
     const toggleOptions = () => {
-        if(i === 0) {
             setIsOptionsOpen(!isOptionsOpen)
 
-        }
     }
+
 
     return (
         <div className='relative'>
@@ -25,7 +37,7 @@ const Options = ({ i }) => {
                 </div>
                 <h1>Edit</h1>
                 <h1>View Profile</h1>
-                <h1>Activate User</h1>
+                <h1 onClick={handleDeactivateUser}>{singleUserStatus}</h1>
                 <Split />
                 <h1>Delete</h1>
             </ViewMoreModal>
