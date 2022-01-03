@@ -1,12 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const Pagination = ({ usersPerPage, totalUsers, first, last, paginate}) => {
-    const pageNumbers = [];
+const Pagination = ({ usersPerPage, totalUsers, first, last, previousPage, nextPage }) => {
 
-    for(let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
-        pageNumbers.push(i)
-    }
     return (
         <PaginationCont>
             <div className='flex gap-12'>
@@ -16,26 +12,10 @@ const Pagination = ({ usersPerPage, totalUsers, first, last, paginate}) => {
                 </div>
                 <div>{first + 1} - {last} of {totalUsers} </div>
                 <div className='flex gap-2 items-center' >
-                    <img  src="./assets/chevron-left.png" alt="chev-left" />
-                    
+                    <img onClick={previousPage} src="./assets/chevron-left.png" alt="chev-left" />
+                    <img onClick={nextPage} src="./assets/chevron-right.png" alt="chev-right" />
                 </div>
             </div>
-            <ul>
-                {pageNumbers.map(number => (
-                    <li key={number}>
-                        <img onClick={() => paginate(number)} src="./assets/chevron-left.png" alt="chev-left" />
-                        <img  onClick={() => paginate(number)} src="./assets/chevron-right.png" alt="chev-right" />
-
-                        {/* <a  href="#">{number}</a> */}
-                    </li>
-                ))}
-                {/* {pageNumbers.map(number => (
-                    <li key={number}>
-                        <a onClick={() => paginate(number)} href="#">{number}</a>
-                    </li>
-                ))} */}
-            </ul>
-
         </PaginationCont>
     )
 }
@@ -57,3 +37,16 @@ const PaginationCont = styled.div`
 `
 
 export default Pagination
+
+
+{/* <ul> */ }
+{/* const pageNumbers = [];
+for(let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
+pageNumbers.push(i)
+} */}
+{/* {pageNumbers.map(number => (
+    <li key={number}>
+        <a onClick={() => paginate(number)} href="#">{number}</a>
+    </li>
+))} */}
+// </ul>

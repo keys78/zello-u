@@ -4,9 +4,9 @@ import TableContent from '../components/TableContent'
 
 const Dashboard = () => {
     return (
-        <div>
+        <>
             <TableContent />
-        </div>
+        </>
     )
 }
 

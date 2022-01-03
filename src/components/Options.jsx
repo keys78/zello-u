@@ -1,23 +1,36 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { useDeactivateUserMutation, useActivateUserMutation, useGetUsersQuery } from '../services/usersApi'
+import {
+    useDeactivateUserMutation,
+    useActivateUserMutation,
+    useMarkPaidMutation,
+    useMarkUnpaidMutation,
+    useGetUsersQuery
+} from '../services/usersApi'
 
 const Options = ({ user, i }) => {
-    const [deactivateUser] = useDeactivateUserMutation({id: user.id});
-    const [activateUser] = useActivateUserMutation({id: user.id});
+    const [deactivateUser] = useDeactivateUserMutation({ id: user.id });
+    const [activateUser] = useActivateUserMutation({ id: user.id });
+    const [markPaid] = useMarkPaidMutation({ id: user.id });
+    const [markUnpaid] = useMarkUnpaidMutation({ id: user.id });
     const { refetch } = useGetUsersQuery()
 
-    const handleDeactivateUser = async() => {
+    const handleUserStatus = async () => {
         user.userStatus === "active" ? await deactivateUser(user.id) : await activateUser(user.id)
         refetch();
-        console.log(user.id)
+    }
+
+    const handlePaymentStatus = async () => {
+        user.paymentStatus === "paid" ? await markPaid(user.id) : await markUnpaid(user.id)
+        refetch();
     }
     const singleUserStatus = user.userStatus === "active" ? "Deactivate User" : "Activate User"
+    const paymentStatus = user.paymentStatus === "paid" ? "Mark Unpaid" : "Mark Paid"
 
 
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
     const toggleOptions = () => {
-            setIsOptionsOpen(!isOptionsOpen)
+        setIsOptionsOpen(!isOptionsOpen)
 
     }
 
@@ -35,9 +48,9 @@ const Options = ({ user, i }) => {
                     className='rounded-full cursor-pointer p-2 bg-white absolute -top-3 -right-3'>
                     <img src="./assets/Close.png" />
                 </div>
-                <h1>Edit</h1>
+                <h1 onClick={handlePaymentStatus}>{paymentStatus}</h1>
                 <h1>View Profile</h1>
-                <h1 onClick={handleDeactivateUser}>{singleUserStatus}</h1>
+                <h1 onClick={handleUserStatus}>{singleUserStatus}</h1>
                 <Split />
                 <h1>Delete</h1>
             </ViewMoreModal>

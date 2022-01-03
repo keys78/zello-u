@@ -39,12 +39,22 @@ const NavFilter = () => {
     }
 
 
+        const xle = [1,2,4]
+       
+    function getSumTotal(xle) {
+        var sum = xle.reduce(function(a, b){
+            return a + b;
+        }, 0);
+        return sum
+    }
+
+
     return (
         allUsers ?
             <NavFilterContainer>
                 <DFlexer className='flex justify-between items-center'>
                     <NavFilterBtn buttons={buttons} filter={filter} />
-                    <h1>Total Payable amount: <span>$900</span> USD</h1>
+                    <h1>Total Payable amount: <span>{getSumTotal()}</span> USD</h1>
                 </DFlexer>
                 <Menu searchTerm={searchTerm} setSearchTerm={setSearchTerm} listItem={listItem} />
             </NavFilterContainer> : "Loading..."

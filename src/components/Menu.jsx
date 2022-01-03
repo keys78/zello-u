@@ -10,8 +10,6 @@ import TableHead from './TableHead'
 const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
     const [checked, setChecked] = useState( );
 
-    // const [users, setUsers] = useState(listItem)/
-    // const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage, setUsersPerPage] = useState(5);
 
@@ -19,8 +17,29 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = listItem && listItem.slice(indexOfFirstUser, indexOfLastUser)
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+    // console.log(currentUsers.length, usersPerPage)
+    
+    const prev = () => {
+        if(currentPage === 1) {
+            setCurrentPage(currentPage)
+        } else if(currentPage < 1) {
+            setCurrentPage(currentPage)
+        } else {
+            setCurrentPage( currentPage - 1)
+        }
 
+    }
+    const next = () => {
+        console.log('next')
+    
+     if (currentUsers.length - 1 != usersPerPage) {
+        setCurrentPage(currentPage + 1)
+
+     } else {
+        alert('Yoo have reached the last page')
+     }
+    }
+  
     return (
         <MenuContainer>
             <div className='flex justify-between items-center w-full px-5'>
@@ -35,13 +54,14 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
                 <TableHead setChecked={setChecked} checked={checked}/>
                 <SingleUser listItem={currentUsers} setChecked={setChecked} checked={checked}/>
             </Table>
-            <Pagination paginate={paginate}
+            <Pagination 
              usersPerPage={usersPerPage}
               totalUsers={listItem && listItem.length} 
               currentPage={currentPage}
-              listItem={listItem}
               first={indexOfFirstUser}
               last={indexOfLastUser}
+              previousPage={prev}
+              nextPage={next}
               />
         </MenuContainer>
     )
@@ -62,3 +82,5 @@ const Table = styled.table`
 `
 
 export default Menu;
+
+// const paginate = (pageNumber) => setCurrentPage(pageNumber)
