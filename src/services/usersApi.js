@@ -6,7 +6,7 @@ const baseUrl = 'https://cornie-assessment.herokuapp.com';
 export const usersApi = createApi({
     reducerPath: 'users',
     baseQuery: fetchBaseQuery({ baseUrl }),
-    tagTypes: ['users'],
+    tagTypes: ['User'],
     endpoints: (builder) => ({
         getUsers: builder.query({
             query: () => `/users/O6Jd07x7M09NkSl`
@@ -18,7 +18,7 @@ export const usersApi = createApi({
                 method: 'PATCH',
                 // body: rest
             }),
-            // providesTags: (result, error, { id }) => [{ type: 'users', id }]
+            // invalidatesTags: ['User']
         }),
         
         deactivateUser: builder.mutation({
@@ -34,6 +34,7 @@ export const usersApi = createApi({
                 method: 'PATCH',
             }),
         }),
+        
         markUnpaid: builder.mutation({
             query: (id) => ({
                 url: `/mark-unpaid/${id}`,
@@ -45,7 +46,7 @@ export const usersApi = createApi({
             query: (id) => ({
                 url: `/remove-user/${id}`,
                 method: 'DELETE',
-            })
+            }),
         }),
        
     })

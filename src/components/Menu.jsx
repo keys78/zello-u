@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import FilterModal from './FilterModal'
 import Pagination from './Pagination'
@@ -8,36 +8,69 @@ import SingleUser from './SingleUser'
 import TableHead from './TableHead'
 
 const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
-    const [checked, setChecked] = useState( );
+    // const [checked, setChecked] = useState(false);
+    const [checkedAll, setCheckedAll] = useState(false);
+    const [checked, setChecked] = useState({
+      nr1: false,
+      nr2: false
+    });
+
+    const toggleCheck = (inputName) => {
+        setChecked((prevState) => {
+          const newState = { ...prevState };
+          newState[inputName] = !prevState[inputName];
+          return newState;
+        });
+      };
+
+      const selectAll = (value) => {
+        setCheckedAll(value);
+        setChecked((prevState) => {
+          const newState = { ...prevState };
+          for (const inputName in newState) {
+            newState[inputName] = value;
+          }
+          return newState;
+        });
+      };
+
+      /* ############################################# */
+  /* #### EFFECT TO CONTROL CHECKED_ALL STATE #### */
+  /* ############################################# */
+
+  // IF YOU CHECK BOTH INDIVIDUALLY. IT WILL ACTIVATE THE checkedAll STATE
+  // IF YOU UNCHECK ANY INDIVIDUALLY. IT WILL DE-ACTIVATE THE checkAll STATE
+
+  useEffect(() => {
+    let allChecked = true;
+    for (const inputName in checked) {
+      if (checked[inputName] === false) {
+        allChecked = false;
+      }
+    }
+    if (allChecked) {
+      setCheckedAll(true);
+    } else {
+      setCheckedAll(false);
+    }
+  }, [checked]);
+
+  
+  
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [usersPerPage, setUsersPerPage] = useState(5);
-
+    const [usersPerPage] = useState(10);
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = listItem && listItem.slice(indexOfFirstUser, indexOfLastUser)
-
-    // console.log(currentUsers.length, usersPerPage)
+    const totalPages = listItem && listItem.length / usersPerPage
     
     const prev = () => {
-        if(currentPage === 1) {
-            setCurrentPage(currentPage)
-        } else if(currentPage < 1) {
-            setCurrentPage(currentPage)
-        } else {
-            setCurrentPage( currentPage - 1)
-        }
-
+        currentPage <= 1 ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1)
     }
-    const next = () => {
-        console.log('next')
-    
-     if (currentUsers.length - 1 != usersPerPage) {
-        setCurrentPage(currentPage + 1)
 
-     } else {
-        alert('Yoo have reached the last page')
-     }
+    const next = () => {
+        currentPage < totalPages && setCurrentPage(currentPage + 1)
     }
   
     return (
@@ -55,7 +88,7 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
                 <SingleUser listItem={currentUsers} setChecked={setChecked} checked={checked}/>
             </Table>
             <Pagination 
-             usersPerPage={usersPerPage}
+              usersPerPage={usersPerPage}
               totalUsers={listItem && listItem.length} 
               currentPage={currentPage}
               first={indexOfFirstUser}
@@ -63,6 +96,25 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
               previousPage={prev}
               nextPage={next}
               />
+              <input
+          type="checkbox"
+          onChange={(event) => selectAll(event.target.checked)}
+          checked={checkedAll}
+        />
+
+        <input
+        type="checkbox"
+        name="nr1"
+        onChange={() => toggleCheck("nr1")}
+        checked={checked["nr1"]}
+      />
+
+      <input
+          type="checkbox"
+          name="nr2"
+          onChange={() => toggleCheck("nr2")}
+          checked={checked["nr2"]}
+        />
         </MenuContainer>
     )
 }

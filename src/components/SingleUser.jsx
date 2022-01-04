@@ -3,8 +3,19 @@ import styled from 'styled-components'
 import Options from './Options'
 import ViewMore from './ViewMore'
 import moment from 'moment'
+import { subTableHeadings } from '../data'
+
 
 const SingleUser = ({ listItem, checked, setChecked }) => {
+    const renderSubTableHeading = subTableHeadings.map((subTable, i) => (
+        <h3 key={i}>{subTable.title}
+            <span className='relative'
+                data-tooltip="Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, mollitia."
+            >
+                {subTable.title === "Detail" && <img src={subTable.icon} alt="icon" />}
+            </span>
+        </h3>
+    ))
     const [activeIndex, setActiveIndex] = useState()
 
     const toggleViewMore = ({ i }) => {
@@ -15,10 +26,12 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
     // const [checkedId, setCheckedId] = useState(listItem.map((user) => user.id))
     // console.log(checkedId)
 
-    const handleChecked = (user, e, i) => {
-        activeCheck === i ? setActiveCheck('') : setActiveCheck(i)
+    // const handleChecked = (i) => {
+    //     // activeCheck === i ? setActiveCheck('') : setActiveCheck(i)
+    //     console.log(i)
+    //     setChecked(!checked)
 
-    }
+    // }
 
 
     return (
@@ -26,12 +39,12 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
             {listItem &&
                 listItem.map((user, i) => (
                     <>
-                        <TableRow key={i}>
+                        <TableRow className={`${activeIndex === i ? "newbg" : ""}`} key={i}>
                             <td>
                                 <div className='flex gap-5 items-center'>
                                     <input type="checkbox"
-                                        checked={activeCheck === i ? checked : ""}
-                                        onChange={(e) => handleChecked(user, e, i)}
+                                        checked={activeCheck === i ? "" : checked}
+                                        onChange={() => setActiveCheck(i)}
                                     />
                                     <img className={`${activeIndex === i ? "upside" : "downside"}`} src="./assets/down.png" alt="morebtn" />
                                 </div>
@@ -76,8 +89,11 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
                         </TableRow>
 
                         <tr className={`${activeIndex === i ? "table-row" : "hidden"}`}>
-                            <td colSpan="6">
-                                <div >
+                            <td className='td-custom' colSpan="6">
+                                <div>
+                                    <div className='sub-table'>
+                                        {renderSubTableHeading}
+                                    </div>
                                     {user.activities.map((activity, i) =>
                                         <ViewMore key={i} activity={activity} i={i} />
                                     )}

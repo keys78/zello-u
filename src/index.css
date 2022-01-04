@@ -193,8 +193,75 @@ th{
   text-align: left;
 }
 
-td, th {
+th {
   padding: 12px 20px;
+}
+
+td {
+  padding: 12px 20px;
+}
+
+.td-custom {
+  padding: 0 !important;
+}
+
+
+.sub-table {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  /* align-items: center;
+  justify-content: center; */
+  background: #F2F0F9;
+  gap: 30px;
+  padding: 15px 95px;
+  border-bottom: 1px solid #d9d5ec;
+}
+
+.newbg {
+  background: #F4F2FF !important;
+}
+
+.sub-table > h3 {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #6E6893;
+}
+
+.sub-table > h3:nth-last-child(3){
+  grid-column: span 1 / span 9
+}
+.sub-table > h3:nth-last-child(2){
+  grid-column: span 3 / span 9
+}
+.sub-table > h3:nth-last-child(1){
+  grid-column: span 5/ span 9;
+  display: flex;
+  gap: 5px;
+}
+
+.sub-table > span:nth-last-child(3){
+  grid-column: span 1 / span 9;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.05em;
+  color: #6E6893;
+
+}
+.sub-table > span:nth-last-child(2){
+  grid-column: span 3 / span 9;
+  font-size: 14px;
+  line-height: 17px;
+  color: #25213B;
+}
+.sub-table > span:nth-last-child(1){
+  grid-column: span 5/ span 9;
+  font-size: 14px;
+  line-height: 17px;
+  color: #25213B;
 }
 
 .upside {
@@ -204,4 +271,48 @@ td, th {
 
 .downside {
   transition: 0.5s;
+}
+
+
+[data-tooltip] { max-width: 100px;}
+[data-tooltip]:before,
+[data-tooltip]:after {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  -webkit-font-smoothing: antialiased;
+  margin: 0 auto;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9;
+  transition: 0.2s ease-in-out 0.1s;
+}
+
+[data-tooltip]:before {
+  content: "";
+  height: 0;
+  width: 0;
+  top: calc(100% - 9px);
+  border-style: solid;
+  border-width: 10px;
+  border-color: transparent transparent rgb(255, 255, 255) transparent;
+}
+
+[data-tooltip]:after {
+  content: attr(data-tooltip);
+  white-space: nowrap;
+  background: rgb(255, 255, 255);
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  box-sizing: border-box;
+  top: calc(100% + 11px);
+  color: rgb(21, 22, 39);
+  border-radius: 2px;
+  z-index: 9;
+}
+
+[data-tooltip]:hover:before,
+[data-tooltip]:hover:after {
+  opacity: 1;
+  visibility: visible;
+  transition: 0.2s ease-in-out 0.1s;
 }

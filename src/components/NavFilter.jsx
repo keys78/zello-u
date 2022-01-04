@@ -34,27 +34,21 @@ const NavFilter = () => {
         }
         const filteredData = allUsers.filter(user => user.paymentStatus === button);
         setListItem(filteredData)
-
         console.log(filteredData)
     }
 
 
-        const xle = [1,2,4]
-       
-    function getSumTotal(xle) {
-        var sum = xle.reduce(function(a, b){
-            return a + b;
-        }, 0);
-        return sum
+    const totalPayable = () => {
+        const x = allUsers.reduce((a, b) => a + b.amountInCents, 0)
+        return x * 0.01
     }
-
 
     return (
         allUsers ?
             <NavFilterContainer>
                 <DFlexer className='flex justify-between items-center'>
                     <NavFilterBtn buttons={buttons} filter={filter} />
-                    <h1>Total Payable amount: <span>{getSumTotal()}</span> USD</h1>
+                    <h1>Total Payable amount: <span>{totalPayable().toFixed(2)}</span> USD</h1>
                 </DFlexer>
                 <Menu searchTerm={searchTerm} setSearchTerm={setSearchTerm} listItem={listItem} />
             </NavFilterContainer> : "Loading..."

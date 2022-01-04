@@ -11,9 +11,9 @@ const Pagination = ({ usersPerPage, totalUsers, first, last, previousPage, nextP
                     <img src="./assets/drop.png" alt="drop-down" />
                 </div>
                 <div>{first + 1} - {last} of {totalUsers} </div>
-                <div className='flex gap-2 items-center' >
-                    <img onClick={previousPage} src="./assets/chevron-left.png" alt="chev-left" />
-                    <img onClick={nextPage} src="./assets/chevron-right.png" alt="chev-right" />
+                <div className='flex gap-10 items-center' >
+                    <img onClick={previousPage} src="./assets/chevron-left.png" className='cursor-pointer' alt="chev-left" />
+                    <img onClick={nextPage} src="./assets/chevron-right.png" className='cursor-pointer' alt="chev-right" />
                 </div>
             </div>
         </PaginationCont>

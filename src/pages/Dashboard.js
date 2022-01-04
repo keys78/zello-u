@@ -6,6 +6,7 @@ const Dashboard = () => {
     return (
         <>
             <TableContent />
+
         </>
     )
 }
