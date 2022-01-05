@@ -21,7 +21,7 @@ const Options = ({ user, i }) => {
     }
 
     const handlePaymentStatus = async () => {
-        user.paymentStatus === "paid" ? await markPaid(user.id) : await markUnpaid(user.id)
+        user.paymentStatus === "unpaid" ? await markPaid(user.id) : await markUnpaid(user.id)
         refetch();
     }
     const singleUserStatus = user.userStatus === "active" ? "Deactivate User" : "Activate User"

@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { radioHeadings } from "../data"
 import { usersRadio } from "../data"
+import { useGetUsersQuery } from '../services/usersApi'
 
 
 function FilterModal({ listItem, setListItem }) {
+    const { data, isSuccess } = useGetUsersQuery();
+    const allUsers = isSuccess && data?.data
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
     const [activeRadio, setActiveRadio] = useState(0);
     const [activeUsersRadio, setActiveUsersRadio] = useState(0);
@@ -14,34 +17,25 @@ function FilterModal({ listItem, setListItem }) {
         setActiveRadio(i)
         let sortedListItem = []
 
-        radio.title === "Default" && sortedListItem.push(() => listItem)
-
         radio.title === "First Name" && sortedListItem.push(...listItem.sort((a, b) => (a.firstName.localeCompare(b.firstName))));
         radio.title === "Last Name" && sortedListItem.push(...listItem.sort((a, b) => (a.lastName.localeCompare(b.lastName))));
         radio.title === "Due Date" && sortedListItem.push(...listItem.sort((a, b) => new Date(b.paidOn) - new Date(a.paidOn)));
         radio.title === "Last Login" && sortedListItem.push(...listItem.sort((a, b) => (a.lastLogin.localeCompare(b.lastLogin))));
-        
-        setListItem(sortedListItem)
+        radio.title === "Default" && sortedListItem.push(...allUsers)
 
+        setListItem(sortedListItem)
     }
 
 
     const sortUsersRadioArray = ({ i, radio }) => {
         setActiveUsersRadio(i)
         let filteredUserStatus = []
-        let fil = []
-
-        // radio.title === "All" && filteredUserStatus.push(listItem)
-        radio.title === "Active" && filteredUserStatus.push(...listItem.filter((user) => {return user.userStatus === "active"}));
-        radio.title === "Inactive" && fil.push(...listItem.filter((user) => {return user.userStatus !== "active"}));
-
-        // radio.title === "Active" && filteredUserStatus.push(...listItem.sort((a, b) => (a.userStatus.localeCompare(b.userStatus))))
-        // radio.title === "Iactive" && filteredUserStatus.push(...listItem.reverse((a, b) => (b.userStatus.localeCompare(a.userStatus))))
-        // radio.title === "Inactive" && filteredUserStatus.push(...listItem.filter((user) => {return user.userStatus !== "active"}));
-     
-        setListItem(filteredUserStatus || fil)
-        console.log(filteredUserStatus)
-
+   
+        radio.title === "Active" && filteredUserStatus.push(...listItem.sort((a, b) => (a.userStatus.localeCompare(b.userStatus))))
+        radio.title === "Inactive" && filteredUserStatus.push(...listItem.sort((a, b) => (b.userStatus.localeCompare(a.userStatus))))
+        radio.title === "All" &&  filteredUserStatus.push(...allUsers)
+         
+        setListItem(filteredUserStatus)
     }
 
 
@@ -150,3 +144,22 @@ const Split = styled.div`
 `
 
 export default FilterModal;
+
+
+
+// switch(radio.title) {
+//     case "First Name":
+//          setListItem(sortedListItem.push(...listItem.sort((a, b) => (a.firstName.localeCompare(b.firstName)))));
+//     case 'Last Name':
+//        setListItem(sortedListItem.push(...listItem.sort((a, b) => (a.lastName.localeCompare(b.lastName)))));
+//     case 'Due Date':
+//       setListItem(sortedListItem.push(...listItem.sort((a, b) => new Date(b.paidOn) - new Date(a.paidOn))));
+//     case 'Last Login':
+//       setListItem(sortedListItem.push(...listItem.sort((a, b) => (a.lastLogin.localeCompare(b.lastLogin)))));
+//     default:
+//         // if(radio.title === "Default") {
+//         //     refetch()
+//         //     setListtem(sortedListItem.push(...allUsers))
+//         // }
+      
+//   }

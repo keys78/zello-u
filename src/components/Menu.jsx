@@ -7,66 +7,57 @@ import SearchBar from './SearchBar'
 import SingleUser from './SingleUser'
 import TableHead from './TableHead'
 
-const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
-    // const [checked, setChecked] = useState(false);
+const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
+    
     const [checkedAll, setCheckedAll] = useState(false);
-    const [checked, setChecked] = useState({
-      nr1: false,
-      nr2: false
-    });
+    const [checked, setChecked] = useState([]);
 
-    const toggleCheck = (inputName) => {
-        setChecked((prevState) => {
-          const newState = { ...prevState };
-          newState[inputName] = !prevState[inputName];
-          return newState;
-        });
-      };
+    // const toggleCheck = (inputName) => {
+    //     setChecked((prevState) => {
+    //         const newState = { ...prevState };
+    //         newState[inputName] = !prevState[inputName];
+    //         return newState;
+    //     });
+    // };
 
-      const selectAll = (value) => {
-        setCheckedAll(value);
-        setChecked((prevState) => {
-          const newState = { ...prevState };
-          for (const inputName in newState) {
-            newState[inputName] = value;
-          }
-          return newState;
-        });
-      };
+    // const selectAll = (value) => {
+    //     setCheckedAll(value);
+    //     setChecked((prevState) => {
+    //         const newState = { ...prevState };
+    //         for (const inputName in newState) {
+    //             newState[inputName] = value;
+    //         }
+    //         return newState;
+    //     });
+    // };
 
-      
-
-      /* ############################################# */
+    /* ############################################# */
     /* #### EFFECT TO CONTROL CHECKED_ALL STATE #### */
-  /* ############################################# */
+    /* ############################################# */
 
-  // IF YOU CHECK BOTH INDIVIDUALLY. IT WILL ACTIVATE THE checkedAll STATE
-  // IF YOU UNCHECK ANY INDIVIDUALLY. IT WILL DE-ACTIVATE THE checkAll STATE
-
-  useEffect(() => {
-    let allChecked = true;
-    for (const inputName in checked) {
-      if (checked[inputName] === false) {
-        allChecked = false;
-      }
-    }
-    if (allChecked) {
-      setCheckedAll(true);
-    } else {
-      setCheckedAll(false);
-    }
-  }, [checked]);
+    // IF YOU CHECK BOTH INDIVIDUALLY. IT WILL ACTIVATE THE checkedAll STATE
+    // IF YOU UNCHECK ANY INDIVIDUALLY. IT WILL DE-ACTIVATE THE checkAll STATE
 
   
-  
+    // const renderCheckboxes = listItem && listItem.map((box, i) => (
+    //     <input
+    //             key={i}
+    //             type="checkbox"
+    //             name={box.id}
+    //             onChange={() => toggleCheck(box.id)}
+    //             checked={checked[box.id]}
+    //         />
+    // ))
+
+
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [usersPerPage] = useState(5);
+    const [usersPerPage, setUsersPerPage] = useState(5);
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = listItem && listItem.slice(indexOfFirstUser, indexOfLastUser)
     const totalPages = listItem && listItem.length / usersPerPage
-    
+
     const prev = () => {
         currentPage <= 1 ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1)
     }
@@ -74,49 +65,51 @@ const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
     const next = () => {
         currentPage < totalPages && setCurrentPage(currentPage + 1)
     }
-  
+
     return (
         <MenuContainer>
             <div className='flex justify-between items-center w-full px-5'>
                 <div className='flex gap-8'>
-                    <FilterModal listItem={listItem} setListItem={setListItem}/>
+                    <FilterModal />
                     <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                 </div>
-                <PayDues checked={checked}/>
+                <PayDues checked={checked} />
             </div>
 
             <Table >
-                <TableHead setCheckedAll={setCheckedAll} checked={checkedAll} setChecked={setChecked}/>
-                <SingleUser listItem={currentUsers} setChecked={setChecked} checked={checked}/>
+                <TableHead setChecked={setChecked} checkedAll={checkedAll} setCheckedAll={setCheckedAll} checked={checked} />
+                <SingleUser listItem={currentUsers} setChecked={setChecked} setCheckedAll={setCheckedAll} checked={checked} />
             </Table>
-            <Pagination 
-              usersPerPage={usersPerPage}
-              totalUsers={listItem && listItem.length} 
-              currentPage={currentPage}
-              first={indexOfFirstUser}
-              last={indexOfLastUser}
-              previousPage={prev}
-              nextPage={next}
-              />
-              <input
-          type="checkbox"
-          onChange={(event) => selectAll(event.target.checked)}
-          checked={checkedAll}
-        />
+            <Pagination
+                usersPerPage={usersPerPage}
+                totalUsers={listItem && listItem.length}
+                currentPage={currentPage}
+                first={indexOfFirstUser}
+                last={indexOfLastUser}
+                previousPage={prev}
+                nextPage={next}
+                setUsersPerPage={setUsersPerPage}
+            />
+            {/* <input
+                type="checkbox"
+                onChange={(event) => selectAll(event.target.checked)}
+                checked={checkedAll}
+            />
 
-        <input
-        type="checkbox"
-        name="nr1"
-        onChange={() => toggleCheck("nr1")}
-        checked={checked["nr1"]}
-      />
+            <input
+                type="checkbox"
+                name="nr1"
+                onChange={() => toggleCheck("nr1")}
+                checked={checked["nr1"]}
+            /> */}
+            {/* {renderCheckboxes} */}
 
-      <input
+            {/* <input
           type="checkbox"
           name="nr2"
           onChange={() => toggleCheck("nr2")}
           checked={checked["nr2"]}
-        />
+        /> */}
         </MenuContainer>
     )
 }

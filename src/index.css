@@ -273,6 +273,23 @@ td {
   transition: 0.5s;
 }
 
+.totalPay {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 17px;
+  color: #6D5BD0;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 [data-tooltip] { max-width: 100px;}
 [data-tooltip]:before,

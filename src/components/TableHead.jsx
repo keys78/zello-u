@@ -2,48 +2,36 @@ import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { tableHeading } from '../data'
 
-const TableHead = ({ setCheckedAll, setChecked, checkedAll, checked }) => {
+const TableHead = ({ setCheckedAll, setChecked, checkedAll }) => {
     const renderTableHeading = tableHeading.map((table, i) => (
         <th key={i}>{table.title}</th>
     ))
-
-    useEffect(() => {
-        let allChecked = true;
-        for (const inputName in checked) {
-          if (checked[inputName] === false) {
-            allChecked = false;
-          }
-        }
-        if (allChecked) {
-          setCheckedAll(true);
-        } else {
-          setCheckedAll(false);
-        }
-
-      }, [checked]);
      
 
-    const selectAll = (value) => {
-        setCheckedAll(value);
+    const selectAll = (e) => {
+        setCheckedAll(e.target.checked);
+
         setChecked((prevState) => {
           const newState = { ...prevState };
           for (const inputName in newState) {
-            newState[inputName] = value;
+            newState[inputName] = e.target.checked;
           }
+          console.log(newState)
           return newState;
         });
-      };
+      
+        
+    };
 
      
-    
 
     return (
         <thead>
             <TableHeadContainer >
                 <th className='flex items-center'>
                     <input type="checkbox" 
-                     onChange={(event) => selectAll(event.target.checked)}
-                     checked={checkedAll}
+                      onChange={(e) => selectAll(e)}
+                      checked={checkedAll}
                     />
                 </th>
                 {renderTableHeading}

@@ -6,10 +6,16 @@ const PayDues = ({ checked }) => {
     const [markPaid] = useMarkPaidMutation()
 
     const handlePaid = async() => {
-        // await markPaid(user.id)
-        if(checked) {
-            console.log('paid')
+        const newArr = []
+
+       for (let key of Object.keys(checked)) {
+        if(key.value === true) {
+            newArr.push(key)
+         console.log('newArr', newArr);
+        }else {
+         console.log('false', key);
         }
+      }
     }
 
     return (

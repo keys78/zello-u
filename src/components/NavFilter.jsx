@@ -38,20 +38,42 @@ const NavFilter = () => {
     }
 
 
-    const totalPayable = () => {
-        const x = allUsers.reduce((a, b) => a + b.amountInCents, 0)
-        return x * 0.01
-    }
+    // const totalPayable = () => {
+    //     const x = allUsers.map((user) => user)
+    //     // const x = allUsers.reduce((a, b) => a + b.amountInCents === , 0)
+    //     // return x * 0.01
+    // }
+
+    function totalPayableAmount() {
+        if (allUsers) {
+          const dues =
+            allUsers &&
+            allUsers.filter(
+              (user) =>
+                user.paymentStatus === "unpaid" ||
+                user.paymentStatus === "overdue"
+            );
+          const totalDues =
+            dues && dues.map((el) => el.amountInCents).reduce((a, b) => a + b);
+          return (totalDues * 0.01).toFixed(2);
+        }
+        return "0.00";
+      }
 
     return (
-        allUsers ?
+        <>
+        {isLoading && "Loading......"}
+        {error &&<span>{error.status}</span>}
+        {isSuccess && !isError &&
             <NavFilterContainer>
                 <DFlexer className='flex justify-between items-center'>
                     <NavFilterBtn buttons={buttons} filter={filter} />
-                    <h1>Total Payable amount: <span>{totalPayable().toFixed(2)}</span> USD</h1>
+                    <h1>Total Payable amount: <span className='totalPay'>{'$'}{totalPayableAmount()}</span> USD</h1>
                 </DFlexer>
                 <Menu searchTerm={searchTerm} setSearchTerm={setSearchTerm} listItem={listItem} setListItem={setListItem}/>
-            </NavFilterContainer> : "Loading..."
+            </NavFilterContainer>
+        }
+        </>
     )
 }
 
@@ -66,35 +88,10 @@ const NavFilterContainer = styled.div`
         line-height: 17px;
         color: #6E6893;
     }
-
-    /* span {
-        font-weight: 700;
-        font-size: 18px;
-        line-height: 17px;
-        color: #6D5BD0;
-        
-    } */
 `
 
 const DFlexer = styled.div`
     border-bottom: 1px solid #C6C2DE;
 `
 
-export default NavFilter
-
-
-// const allCategories = data && ['All', ...new Set(allUsers.map((user) => (user.paymentStatus)))];
-    // const [radioButton, setRadioButton] = useState(allCategorie);
-    // const allCategorie = ['Default', 'firstName', 'Last Name', 'userStatus', 'Due Date', 'Last Login', 'All', 'Active', 'Inactive'];
-
-
-// const filterRadio = (radioBtn) => {
-    //     if (radioBtn === 'All') {
-    //         setListItem(allUsers);
-    //         return;
-    //     }
-    //     const filteredRadioData = allUsers.filter(user => user.userStatus === radioBtn);
-    //     setListItem(filteredRadioData)
-
-    //     console.log(filteredRadioData)
-    // }
+export default NavFilter;

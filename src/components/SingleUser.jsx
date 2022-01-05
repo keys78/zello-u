@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Options from './Options'
 import ViewMore from './ViewMore'
@@ -6,22 +6,44 @@ import moment from 'moment'
 import { subTableHeadings } from '../data'
 
 
-const SingleUser = ({ listItem, checked, setChecked }) => {
+const SingleUser = ({ listItem, checked, setChecked, setCheckedAll }) => {
     const renderSubTableHeading = subTableHeadings.map((subTable, i) => (
         <h3 key={i}>{subTable.title}
             <span className='relative'
                 data-tooltip="Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse, mollitia."
             >
-                {subTable.title === "Detail" && <img src={subTable.icon} alt="icon" />}
+                {subTable.title === "Detail" && <img src={subTable.icon} alt="info-icon" />}
             </span>
         </h3>
     ))
-    const [activeIndex, setActiveIndex] = useState()
 
+    const [activeIndex, setActiveIndex] = useState()
     const toggleViewMore = ({ i }) => {
         activeIndex === i ? setActiveIndex('') : setActiveIndex(i)
     }
-    const [activeCheck, setActiveCheck] = useState()
+
+    useEffect(() => {
+        let allChecked = true;
+        for (const inputName in checked) {
+            if (checked[inputName] === false) {
+                allChecked = false;
+            }
+        }
+        if (allChecked) {
+            setCheckedAll(true);
+        } else {
+            setCheckedAll(false);
+        }
+    }, [checked]);
+
+
+    const toggleCheck = (inputName) => {
+        setChecked((prevState) => {
+            const newState = { ...prevState };
+            newState[inputName] = !prevState[inputName];
+            return newState;
+        });
+    };
 
     return (
         <tbody>
@@ -32,8 +54,11 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
                             <td>
                                 <div className='flex gap-5 items-center'>
                                     <input type="checkbox"
-                                        // checked={activeCheck === i ? "" : checked}
-                                        // onChange={() => setActiveCheck(i)}
+                                        key={i}
+                                        type="checkbox"
+                                        name={user.id}
+                                        onChange={() => toggleCheck(user.id)}
+                                        checked={checked[user.id]}
                                     />
                                     <img className={`${activeIndex === i ? "upside" : "downside"}`} src="./assets/down.png" alt="morebtn" />
                                 </div>
