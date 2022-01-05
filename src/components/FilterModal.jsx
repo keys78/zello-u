@@ -3,24 +3,60 @@ import styled from 'styled-components'
 import { radioHeadings } from "../data"
 import { usersRadio } from "../data"
 
-function FilterModal() {
+
+function FilterModal({ listItem, setListItem }) {
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
     const [activeRadio, setActiveRadio] = useState(0);
     const [activeUsersRadio, setActiveUsersRadio] = useState(0);
+
+
+    const sortArray = ({ i, radio }) => {
+        setActiveRadio(i)
+        let sortedListItem = []
+
+        radio.title === "Default" && sortedListItem.push(() => listItem)
+
+        radio.title === "First Name" && sortedListItem.push(...listItem.sort((a, b) => (a.firstName.localeCompare(b.firstName))));
+        radio.title === "Last Name" && sortedListItem.push(...listItem.sort((a, b) => (a.lastName.localeCompare(b.lastName))));
+        radio.title === "Due Date" && sortedListItem.push(...listItem.sort((a, b) => new Date(b.paidOn) - new Date(a.paidOn)));
+        radio.title === "Last Login" && sortedListItem.push(...listItem.sort((a, b) => (a.lastLogin.localeCompare(b.lastLogin))));
+        
+        setListItem(sortedListItem)
+
+    }
+
+
+    const sortUsersRadioArray = ({ i, radio }) => {
+        setActiveUsersRadio(i)
+        let filteredUserStatus = []
+        let fil = []
+
+        // radio.title === "All" && filteredUserStatus.push(listItem)
+        radio.title === "Active" && filteredUserStatus.push(...listItem.filter((user) => {return user.userStatus === "active"}));
+        radio.title === "Inactive" && fil.push(...listItem.filter((user) => {return user.userStatus !== "active"}));
+
+        // radio.title === "Active" && filteredUserStatus.push(...listItem.sort((a, b) => (a.userStatus.localeCompare(b.userStatus))))
+        // radio.title === "Iactive" && filteredUserStatus.push(...listItem.reverse((a, b) => (b.userStatus.localeCompare(a.userStatus))))
+        // radio.title === "Inactive" && filteredUserStatus.push(...listItem.filter((user) => {return user.userStatus !== "active"}));
+     
+        setListItem(filteredUserStatus || fil)
+        console.log(filteredUserStatus)
+
+    }
 
 
     const radioIconActive = "./assets/Radio.png"
     const radioIconInactive = "./assets/Ellipse 1.png"
 
     const renderRadioHeadings = radioHeadings.map((radio, i) =>
-        <button onClick={() => setActiveRadio(i)}>
+        <button key={i} onClick={() => sortArray({ radio, i })}>
             <span>{radio.title}</span>
             <img src={activeRadio === i ? radioIconActive : radioIconInactive} alt="radio-sort" />
         </button>
     )
 
     const renderUsersRadioHeadings = usersRadio.map((radio, i) =>
-        <button onClick={() => setActiveUsersRadio(i)}>
+        <button key={i} onClick={() => sortUsersRadioArray({i, radio})}>
             <span>{radio.title}</span>
             <img src={activeUsersRadio === i ? radioIconActive : radioIconInactive} alt="radio-sort" />
         </button>
@@ -30,7 +66,7 @@ function FilterModal() {
 
     return (
         <>
-            <FilterButton onClick={() => setIsOptionsOpen(true)}>
+            <FilterButton onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
                 <img src="./assets/funnel.png" alt="funnel" />
                 <h1>Filter</h1>
 

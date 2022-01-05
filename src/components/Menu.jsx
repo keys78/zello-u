@@ -7,7 +7,7 @@ import SearchBar from './SearchBar'
 import SingleUser from './SingleUser'
 import TableHead from './TableHead'
 
-const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
+const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
     // const [checked, setChecked] = useState(false);
     const [checkedAll, setCheckedAll] = useState(false);
     const [checked, setChecked] = useState({
@@ -34,8 +34,10 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
         });
       };
 
+      
+
       /* ############################################# */
-  /* #### EFFECT TO CONTROL CHECKED_ALL STATE #### */
+    /* #### EFFECT TO CONTROL CHECKED_ALL STATE #### */
   /* ############################################# */
 
   // IF YOU CHECK BOTH INDIVIDUALLY. IT WILL ACTIVATE THE checkedAll STATE
@@ -59,7 +61,7 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
   
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [usersPerPage] = useState(10);
+    const [usersPerPage] = useState(5);
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
     const currentUsers = listItem && listItem.slice(indexOfFirstUser, indexOfLastUser)
@@ -77,14 +79,14 @@ const Menu = ({ listItem, searchTerm, setSearchTerm }) => {
         <MenuContainer>
             <div className='flex justify-between items-center w-full px-5'>
                 <div className='flex gap-8'>
-                    <FilterModal />
+                    <FilterModal listItem={listItem} setListItem={setListItem}/>
                     <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
                 </div>
                 <PayDues checked={checked}/>
             </div>
 
             <Table >
-                <TableHead setChecked={setChecked} checked={checked}/>
+                <TableHead setCheckedAll={setCheckedAll} checked={checkedAll} setChecked={setChecked}/>
                 <SingleUser listItem={currentUsers} setChecked={setChecked} checked={checked}/>
             </Table>
             <Pagination 

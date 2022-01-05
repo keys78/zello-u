@@ -23,17 +23,6 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
     }
     const [activeCheck, setActiveCheck] = useState()
 
-    // const [checkedId, setCheckedId] = useState(listItem.map((user) => user.id))
-    // console.log(checkedId)
-
-    // const handleChecked = (i) => {
-    //     // activeCheck === i ? setActiveCheck('') : setActiveCheck(i)
-    //     console.log(i)
-    //     setChecked(!checked)
-
-    // }
-
-
     return (
         <tbody>
             {listItem &&
@@ -43,8 +32,8 @@ const SingleUser = ({ listItem, checked, setChecked }) => {
                             <td>
                                 <div className='flex gap-5 items-center'>
                                     <input type="checkbox"
-                                        checked={activeCheck === i ? "" : checked}
-                                        onChange={() => setActiveCheck(i)}
+                                        // checked={activeCheck === i ? "" : checked}
+                                        // onChange={() => setActiveCheck(i)}
                                     />
                                     <img className={`${activeIndex === i ? "upside" : "downside"}`} src="./assets/down.png" alt="morebtn" />
                                 </div>
