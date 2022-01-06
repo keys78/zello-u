@@ -17,11 +17,11 @@ const NavFilter = () => {
 
     useEffect(() => {
         const searchFilter = data?.data.filter((user) =>
-         user.firstName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
-         user.lastName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
-         user.email.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
-         user.lastLogin.toLowerCase().includes(searchTerm.toLocaleLowerCase()))
-         
+            user.firstName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+            user.lastName.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+            user.email.toLowerCase().includes(searchTerm.toLocaleLowerCase()) ||
+            user.lastLogin.toLowerCase().includes(searchTerm.toLocaleLowerCase()))
+
         setListItem(searchFilter)
     }, [data, searchTerm])
 
@@ -38,41 +38,34 @@ const NavFilter = () => {
     }
 
 
-    // const totalPayable = () => {
-    //     const x = allUsers.map((user) => user)
-    //     // const x = allUsers.reduce((a, b) => a + b.amountInCents === , 0)
-    //     // return x * 0.01
-    // }
-
     function totalPayableAmount() {
         if (allUsers) {
-          const dues =
-            allUsers &&
-            allUsers.filter(
-              (user) =>
-                user.paymentStatus === "unpaid" ||
-                user.paymentStatus === "overdue"
+            const dues = []
+            allUsers.map((user) => {
+                if (user.paymentStatus === "unpaid" || user.paymentStatus === "overdue") {
+                    dues.push(user)
+                }
+              }
             );
-          const totalDues =
-            dues && dues.map((el) => el.amountInCents).reduce((a, b) => a + b);
-          return (totalDues * 0.01).toFixed(2);
+            const totalDues = dues && dues.map((el) => el.amountInCents).reduce((a, b) => a + b);
+            return (totalDues * 0.01).toFixed(2);
         }
-        return "0.00";
-      }
+        return 0.00
+    }
 
     return (
         <>
-        {isLoading && "Loading......"}
-        {error &&<span>{error.status}</span>}
-        {isSuccess && !isError &&
-            <NavFilterContainer>
-                <DFlexer className='flex justify-between items-center'>
-                    <NavFilterBtn buttons={buttons} filter={filter} />
-                    <h1>Total Payable amount: <span className='totalPay'>{'$'}{totalPayableAmount()}</span> USD</h1>
-                </DFlexer>
-                <Menu searchTerm={searchTerm} setSearchTerm={setSearchTerm} listItem={listItem} setListItem={setListItem}/>
-            </NavFilterContainer>
-        }
+            {isLoading && "Loading......"}
+            {error && <span>{error.status}</span>}
+            {isSuccess && !isError &&
+                <NavFilterContainer>
+                    <DFlexer className='flex sm:flex-row flex-col justify-between sm:items-center'>
+                        <NavFilterBtn buttons={buttons} filter={filter} />
+                        <h1>Total Payable amount: <span className='totalPay'>{'$'}{totalPayableAmount()}</span> USD</h1>
+                    </DFlexer>
+                    <Menu searchTerm={searchTerm} setSearchTerm={setSearchTerm} listItem={listItem} setListItem={setListItem} />
+                </NavFilterContainer>
+            }
         </>
     )
 }
@@ -92,6 +85,10 @@ const NavFilterContainer = styled.div`
 
 const DFlexer = styled.div`
     border-bottom: 1px solid #C6C2DE;
+
+    @media (max-width: 640px) {
+        padding-bottom: 12px;
+  }
 `
 
 export default NavFilter;

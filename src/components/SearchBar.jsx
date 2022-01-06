@@ -40,6 +40,10 @@ const SearchContainer  = styled.div`
         background: #F4F2FF;
         border: 1px solid #6D5BD0;
     }
+
+    @media (max-width: 640px) {
+       width: 100%;
+  }
 `
 
 export default SearchBar

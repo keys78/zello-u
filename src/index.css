@@ -12,6 +12,15 @@ body {
   font-family: Inter;
 }
 
+@media screen and (max-width: 768px) {
+  body {
+    padding:0 20px;
+  }
+  .btn {
+    margin-bottom: 10px;
+  }
+}
+
 .btn {
   font-weight: 500;
   font-size: 14px;

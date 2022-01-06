@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { radioHeadings } from "../data"
 import { usersRadio } from "../data"
 import { useGetUsersQuery } from '../services/usersApi'
+import { motion, AnimatePresence } from 'framer-motion'
 
 
 function FilterModal({ listItem, setListItem }) {
@@ -64,15 +65,22 @@ function FilterModal({ listItem, setListItem }) {
                 <img src="./assets/funnel.png" alt="funnel" />
                 <h1>Filter</h1>
 
-                {isOptionsOpen && <ViewMoreModal>
+                <AnimatePresence>
+                {isOptionsOpen && <ViewMoreModal
+                 initial={{ y: 100, opacity: 0 }}
+                 animate={{ y: 0, opacity: 1 }}
+                 exit={{ y: 100, opacity: 0 }}
+                 transiton={{ type: 'spring', duration: 0.2 }}
+                >
                     <h2>sort by:</h2>
                     {renderRadioHeadings}
                     <Split />
-
                     <h2>users:</h2>
                     {renderUsersRadioHeadings}
                 </ViewMoreModal>
                 }
+                </AnimatePresence>
+               
             </FilterButton>
         </>
     )
@@ -97,7 +105,7 @@ const FilterButton = styled.div`
         color:#25213B;
     }
 `
-const ViewMoreModal = styled.div`
+const ViewMoreModal = styled(motion.div)`
     position: absolute;
     width: 224px;
     left: 0;

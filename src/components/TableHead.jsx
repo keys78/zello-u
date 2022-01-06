@@ -10,7 +10,6 @@ const TableHead = ({ setCheckedAll, setChecked, checkedAll }) => {
 
     const selectAll = (e) => {
         setCheckedAll(e.target.checked);
-
         setChecked((prevState) => {
           const newState = { ...prevState };
           for (const inputName in newState) {

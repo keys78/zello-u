@@ -12,10 +12,10 @@ const Pagination = ({ usersPerPage, totalUsers, first, last, previousPage, nextP
                     <p>Rows per page : {usersPerPage}</p>
                     <img onClick={() => setShowdrop(!showdrop)} className='cursor-pointer' src="./assets/drop.png" alt="drop-down" />
 
-                    {showdrop && <Dropdown>
-                        <h1 onClick={() => setUsersPerPage(2)}>2</h1>
-                        <h1 onClick={() => setUsersPerPage(5)}>5</h1>
-                        <h1 onClick={() => setUsersPerPage(10)}>10</h1>
+                    {showdrop && <Dropdown onClick={() => setShowdrop(!showdrop)}>
+                        <h1 onClick={() => setUsersPerPage(2)}>Set to 2</h1>
+                        <h1 onClick={() => setUsersPerPage(5)}>Set to 5</h1>
+                        <h1 onClick={() => setUsersPerPage(10)}>Set to 10</h1>
                     </Dropdown>
                     }
                 </div>
@@ -49,6 +49,7 @@ const PaginationCont = styled.div`
 
 const Dropdown = styled.div`
     position: absolute;
+    text-align: left !important;
     width: 100px;
     right: 10px;
     top:12px;
@@ -66,13 +67,6 @@ const Dropdown = styled.div`
         line-height: 17px;
         letter-spacing: 0.05em;
         padding:5px;
-
-        &:nth-child(4) {
-            color: #007F00
-        }
-        &:nth-last-child(1){
-            color: #D30000
-        }
 
         &:hover {
             background: #F2F0F9;
