@@ -50,7 +50,7 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll }) => {
         <tbody>
             {listItem &&
                 listItem.map((user, i) => (
-                    // <>
+                    <>
                         <TableRow
                             initial={{ opacity: 0, translateY: -50 }}
                             animate={{ opacity: 1, translateY: 0 }}
@@ -108,19 +108,19 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll }) => {
 
                         </TableRow>
 
-                    //     <tr className={`${activeIndex === i ? "table-row" : "hidden"}`}>
-                    //         <td className='td-custom' colSpan="6">
-                    //             <div>
-                    //                 <div className='sub-table'>
-                    //                     {renderSubTableHeading}
-                    //                 </div>
-                    //                 {user.activities.map((activity, i) =>
-                    //                     <ViewMore key={i} activity={activity} i={i} />
-                    //                 )}
-                    //             </div>
-                    //         </td>
-                    //     </tr>
-                    // </>
+                        <tr className={`${activeIndex === i ? "table-row" : "hidden"}`}>
+                            <td className='td-custom' colSpan="6">
+                                <div>
+                                    <div className='sub-table'>
+                                        {renderSubTableHeading}
+                                    </div>
+                                    {user.activities.map((activity, i) =>
+                                        <ViewMore key={i} activity={activity} i={i} />
+                                    )}
+                                </div>
+                            </td>
+                        </tr>
+                    </>
 
                 ))
             }
