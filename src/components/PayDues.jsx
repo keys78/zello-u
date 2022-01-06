@@ -7,7 +7,7 @@ const PayDues = ({ checked, listItem }) => {
     const { refetch } = useGetUsersQuery()
     const [markPaid] = useMarkPaidMutation()
 
-    const handlePaid = async () => {
+    const handlePaid = () => {
         const newArr = []
 
         for (const [key, value] of Object.entries(checked)) {
@@ -28,14 +28,16 @@ const PayDues = ({ checked, listItem }) => {
         //     }
             
 
-            newArr.forEach(el => {
+           newArr.forEach(el => {
+                refetch();
                 markPaid(el)
                 alert(`${el} has paid`)
-                refetch();
+                window.location.reload()
+                
             })
-            
+            window.location.reload()
         // })
-        refetch();
+        
     }
     
 

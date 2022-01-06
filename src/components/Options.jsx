@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { ToastContainer, toast } from 'react-toastify';
+
 import {
     useDeactivateUserMutation,
     useActivateUserMutation,
@@ -18,8 +20,21 @@ const Options = ({ user, i }) => {
     const [deleteUser] = useDeleteUserMutation({ id: user.id });
     const { refetch } = useGetUsersQuery();
 
+    const deactivateAlert = () => toast(`${user.firstName} is deactivated`)
+    const activateAlert = () => toast(`${user.firstName} is activated`)
+    const paidAlert = () => toast(`${user.firstName} is marked paid`)
+    const unpaidAlert = () => toast(`${user.firstName} is marked unpaid`)
+   
+
     const handleUserStatus = async () => {
-        user.userStatus === "active" ? await deactivateUser(user.id) : await activateUser(user.id)
+        if(user.userStatus === "active"){
+            await deactivateUser(user.id)
+            deactivateAlert();
+        } else {
+            await activateUser(user.id)
+            activateAlert()
+        } 
+      
         refetch();
         toggleOptions();
     }
@@ -27,6 +42,7 @@ const Options = ({ user, i }) => {
     const handlePaymentStatus = async () => {
         user.paymentStatus === "unpaid" ? await markPaid(user.id) : await markUnpaid(user.id)
         refetch();
+        alert(`${user.firstName} is marked`)
         toggleOptions();
     }
     const singleUserStatus = user.userStatus === "active" ? "Deactivate User" : "Activate User"
@@ -47,6 +63,8 @@ const Options = ({ user, i }) => {
 
 
     return (
+        <>
+         <ToastContainer position="top-right" />
         <div className='relative'>
             <img onClick={toggleOptions}
                 src="./assets/More.png"
@@ -55,6 +73,7 @@ const Options = ({ user, i }) => {
             />
 
             <AnimatePresence>
+                
                 {isOptionsOpen && <ViewMoreModal
                     initial={{ y: -10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
@@ -74,6 +93,7 @@ const Options = ({ user, i }) => {
                 }
             </AnimatePresence>
         </div>
+        </>
     )
 }
 
