@@ -19,6 +19,13 @@ body {
   .btn {
     margin-bottom: 10px;
   }
+  input[type="checkbox"] {
+    width: 40px !important;
+  }
+  .vire {
+    max-width: 20px;
+    cursor: pointer;
+  }
 }
 
 .btn {

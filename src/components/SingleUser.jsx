@@ -50,12 +50,13 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll }) => {
         <tbody>
             {listItem &&
                 listItem.map((user, i) => (
-                    <>
+                    // <>
                         <TableRow
                             initial={{ opacity: 0, translateY: -50 }}
                             animate={{ opacity: 1, translateY: 0 }}
                             transition={{ duration: 0.2, delay: i * 0.3 }}
-                            className={`${activeIndex === i ? "newbg" : ""}`} key={i}>
+                            className={`${activeIndex === i ? "newbg" : ""}`}
+                            key={user.id}>
                             <td>
                                 <div className='flex gap-5 items-center'>
                                     <input type="checkbox"
@@ -107,19 +108,19 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll }) => {
 
                         </TableRow>
 
-                        <tr className={`${activeIndex === i ? "table-row" : "hidden"}`}>
-                            <td className='td-custom' colSpan="6">
-                                <div>
-                                    <div className='sub-table'>
-                                        {renderSubTableHeading}
-                                    </div>
-                                    {user.activities.map((activity, i) =>
-                                        <ViewMore key={i} activity={activity} i={i} />
-                                    )}
-                                </div>
-                            </td>
-                        </tr>
-                    </>
+                    //     <tr className={`${activeIndex === i ? "table-row" : "hidden"}`}>
+                    //         <td className='td-custom' colSpan="6">
+                    //             <div>
+                    //                 <div className='sub-table'>
+                    //                     {renderSubTableHeading}
+                    //                 </div>
+                    //                 {user.activities.map((activity, i) =>
+                    //                     <ViewMore key={i} activity={activity} i={i} />
+                    //                 )}
+                    //             </div>
+                    //         </td>
+                    //     </tr>
+                    // </>
 
                 ))
             }

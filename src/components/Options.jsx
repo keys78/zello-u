@@ -16,7 +16,7 @@ const Options = ({ user, i }) => {
     const [markPaid] = useMarkPaidMutation({ id: user.id });
     const [markUnpaid] = useMarkUnpaidMutation({ id: user.id });
     const [deleteUser] = useDeleteUserMutation({ id: user.id });
-    const { refetch } = useGetUsersQuery()
+    const { refetch } = useGetUsersQuery();
 
     const handleUserStatus = async () => {
         user.userStatus === "active" ? await deactivateUser(user.id) : await activateUser(user.id)
@@ -32,6 +32,11 @@ const Options = ({ user, i }) => {
     const singleUserStatus = user.userStatus === "active" ? "Deactivate User" : "Activate User"
     const paymentStatus = user.paymentStatus === "paid" ? "Mark Unpaid" : "Mark Paid"
 
+    const showProfile = () => {
+        alert(`${user.firstName} ${user.lastName} is ${user.paymentStatus}`)
+        toggleOptions();
+    }
+
 
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
     const toggleOptions = () => {
@@ -46,14 +51,14 @@ const Options = ({ user, i }) => {
             <img onClick={toggleOptions}
                 src="./assets/More.png"
                 alt="morebtn"
-                className='cursor-pointer'
+                className='vire cursor-pointer'
             />
 
             <AnimatePresence>
                 {isOptionsOpen && <ViewMoreModal
-                    initial={{ y: 100, opacity: 0 }}
+                    initial={{ y: -10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: 100, opacity: 0 }}
+                    exit={{ y: 10, opacity: 0 }}
                     transiton={{ type: 'spring', duration: 0.2 }}
                 >
                     <div onClick={toggleOptions}
@@ -61,7 +66,7 @@ const Options = ({ user, i }) => {
                         <img src="./assets/Close.png" />
                     </div>
                     <h1 onClick={handlePaymentStatus}>{paymentStatus}</h1>
-                    <h1>View Profile</h1>
+                    <h1 onClick={showProfile}>View Profile</h1>
                     <h1 onClick={handleUserStatus}>{singleUserStatus}</h1>
                     <Split />
                     <h1 onClick={async () => await deleteUser(user.id)}>Delete</h1>
@@ -81,7 +86,7 @@ const ViewMoreModal = styled(motion.div)`
     background: #FFFFFF;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
     border-radius: 6px;
-    z-index: 999999;
+    z-index: 9999999999999999999999999;
 
     div {
         box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);

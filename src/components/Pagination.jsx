@@ -25,8 +25,6 @@ const Pagination = ({ usersPerPage, totalUsers, first, last, previousPage, nextP
                     <img onClick={nextPage} src="./assets/chevron-right.png" className='cursor-pointer' alt="chev-right" />
                 </div>
             </div>
-
-
         </PaginationCont>
     )
 }
@@ -73,6 +71,10 @@ const Dropdown = styled.div`
             border-radius: 4px;
             cursor: pointer;
         }
+    }
+
+    @media screen and (max-width: 768px){
+        margin-bottom: 40px;
     }
 `
 
