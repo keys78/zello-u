@@ -24,20 +24,20 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll, checkedAll }
     }
 
    
-    useEffect(() => {
-        let allChecked = true;
-        for (const inputName in checked) {
-          if (checked[inputName] === false) {
-            allChecked = false;
-          }
-        }
-        if (allChecked) {
-          setCheckedAll(true);
-        } else {
-          setCheckedAll(false);
-        }
+    // useEffect(() => {
+    //     let allChecked = true;
+    //     for (const inputName in checked) {
+    //       if (checked[inputName] === false) {
+    //         allChecked = false;
+    //       }
+    //     }
+    //     if (allChecked) {
+    //       setCheckedAll(true);
+    //     } else {
+    //       setCheckedAll(false);
+    //     }
        
-      }, [checked]);
+    //   }, [checked]);
 
 
  const toggleCheck = (inputName) => {
@@ -67,7 +67,7 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll, checkedAll }
                                         type="checkbox"
                                         name={user.id}
                                         onChange={() => toggleCheck(user.id)}
-                                        checked={checked[user.id]}
+                                        checked={listItem && checked[user.id]}
                                     />
                                     <img className={`${activeIndex === i ? "upside" : "downside"}`} src="./assets/down.png" alt="morebtn" />
                                 </div>

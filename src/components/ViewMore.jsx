@@ -12,10 +12,10 @@ const ViewMore = ({ activity }) => {
                     {moment(activity.date).format("D/MMM/YYYY")}
                 </span>
                 <span>
-                    {activity.userActivity}
+                    {activity.userActivity ? activity.userActivity : "USER HAS NO ACTIVITY"}
                 </span>
                 <span>
-                    {activity.details}
+                    {activity.details ? activity.details : "No activigruddvdsfdv"}
                 </span>
             </div>
         </div>
