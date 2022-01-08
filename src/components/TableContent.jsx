@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-// import ContentDisplay from './ContentDisplay'
 import NavFilter from './NavFilter'
 
 const TableContent = () => {
@@ -8,8 +7,6 @@ const TableContent = () => {
         <div>
             <TableHeader>TABLE HEADING</TableHeader>
             <NavFilter/>
-            {/* <ContentDisplay /> */}
-
         </div>
     )
 }

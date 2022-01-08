@@ -53,13 +53,13 @@ const Options = ({ user, i }) => {
         alert(`${user.firstName} ${user.lastName} is ${user.paymentStatus}`)
         toggleOptions();
     }
+    
+    
 
     // useEffect(() => {
-    //     const closeIsOptions = e => {
-    //         setIsOptionsOpen(false)
-    //     }
-
-    //     document.body.addEventListener('click', closeIsOptions);
+    //     // document.body.addEventListener('mousedown', () => {
+    //     //     setIsOptionsOpen(!isOptionsOpen)
+    //     // });
     // })
 
 

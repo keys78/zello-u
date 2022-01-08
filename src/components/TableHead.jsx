@@ -8,19 +8,18 @@ const TableHead = ({ setCheckedAll, setChecked, checkedAll }) => {
     ))
      
 
-    const selectAll = (e) => {
-        setCheckedAll(e.target.checked);
+    const selectAll = (value) => {
+        setCheckedAll(value);
         setChecked((prevState) => {
           const newState = { ...prevState };
           for (const inputName in newState) {
-            newState[inputName] = e.target.checked;
+            newState[inputName] = value;
           }
           console.log(newState)
           return newState;
+         
         });
-      
-        
-    };
+      };
 
      
 
@@ -29,7 +28,7 @@ const TableHead = ({ setCheckedAll, setChecked, checkedAll }) => {
             <TableHeadContainer >
                 <th className='flex items-center'>
                     <input type="checkbox" 
-                      onChange={(e) => selectAll(e)}
+                      onChange={(e) => selectAll(e.target.checked)}
                       checked={checkedAll}
                     />
                 </th>

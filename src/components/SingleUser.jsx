@@ -7,7 +7,7 @@ import { subTableHeadings } from '../data'
 import { motion } from 'framer-motion'
 
 
-const SingleUser = ({ listItem, checked, setChecked, setCheckedAll }) => {
+const SingleUser = ({ listItem, checked, setChecked, setCheckedAll, checkedAll }) => {
     const renderSubTableHeading = subTableHeadings.map((subTable, i) => (
         <h3 key={i}>{subTable.title}
             <span className='relative'
@@ -23,28 +23,31 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll }) => {
         activeIndex === i ? setActiveIndex('') : setActiveIndex(i)
     }
 
+   
     useEffect(() => {
         let allChecked = true;
         for (const inputName in checked) {
-            if (checked[inputName] === false) {
-                allChecked = false;
-            }
+          if (checked[inputName] === false) {
+            allChecked = false;
+          }
         }
         if (allChecked) {
-            setCheckedAll(true);
+          setCheckedAll(true);
         } else {
-            setCheckedAll(false);
+          setCheckedAll(false);
         }
-    }, [checked]);
+       
+      }, [checked]);
 
 
-    const toggleCheck = (inputName) => {
-        setChecked((prevState) => {
-            const newState = { ...prevState };
-            newState[inputName] = !prevState[inputName];
-            return newState;
-        });
-    };
+ const toggleCheck = (inputName) => {
+    setChecked((prevState) => {
+      const newState = { ...prevState };
+      newState[inputName] = !prevState[inputName];
+      console.log(newState)
+      return newState;
+    });
+  };
 
     return (
         <tbody>

@@ -8,9 +8,43 @@ import SingleUser from './SingleUser'
 import TableHead from './TableHead'
 
 const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
+    const keepArr = listItem && listItem.map((user) => user.id)
+    // let obj = listItem && keepArr.reduce(function(acc, curr) {
+    //     acc[curr] = false;
+    //     return acc;
+    //   }, {});
+    //   console.log(obj)
+    // const checkedObj = keepArr && keepArr.reduce((acc,curr)=> (acc[curr]=false,acc),{});
+    // console.log(checkedObj)
     
     const [checkedAll, setCheckedAll] = useState(false);
-    const [checked, setChecked] = useState([]);
+    const [checked, setChecked] = useState(listItem.length > 1 && keepArr.reduce(function(acc, curr) {
+        acc[curr] = false;
+        return acc;
+      }, {}));
+    console.log(checked)
+    // const [checked, setChecked] = useState({
+    //     731: false,
+    //     732: false,
+    //     733: false,
+    //     734: false,
+    //     735: false,
+    //     736: false,
+    //     737: false,
+    //     738: false,
+    //     739: false,
+    //     740: false,
+    //     741: false,
+    //     742: false,
+    //     743: false,
+    //     744: false,
+    //     745: false,
+    //     746: false,
+    //     747: false,
+    //     748: false,
+    //     749: false,
+    //     750: false
+    // });
 
   
     const [currentPage, setCurrentPage] = useState(1);
@@ -26,6 +60,7 @@ const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
         }
     }, [currentUsers])
 
+    
     const prev = () => {
         currentPage <= 1 ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1)
     }
@@ -33,6 +68,22 @@ const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
     const next = () => {
         currentPage < totalPages && setCurrentPage(currentPage + 1)
     }
+
+    useEffect(() => {
+        let allChecked = true;
+        for (const inputName in checked) {
+          if (checked[inputName] === false) {
+            allChecked = false;
+          }
+        }
+        if (allChecked) {
+          setCheckedAll(true);
+        } else {
+          setCheckedAll(false);
+        }
+       
+      }, [checked]);
+
 
     return (
         <MenuContainer>
@@ -46,8 +97,8 @@ const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
 
             <div className='sm:overflow-x-hidden overflow-x-scroll'>
             <Table >
-                <TableHead setChecked={setChecked} checkedAll={checkedAll} setCheckedAll={setCheckedAll} checked={checked} />
-                <SingleUser listItem={currentUsers} setChecked={setChecked} setCheckedAll={setCheckedAll} checked={checked} />
+                <TableHead listItem={listItem && listItem} setChecked={setChecked} checkedAll={checkedAll} setCheckedAll={setCheckedAll} checked={checked} />
+                <SingleUser listItem={currentUsers} setChecked={setChecked} checkedAll={checkedAll} setCheckedAll={setCheckedAll} checked={checked} />
             </Table>
             </div>
            
@@ -82,68 +133,4 @@ const Table = styled.table`
 
 export default Menu;
 
-
-
-
-
 // const paginate = (pageNumber) => setCurrentPage(pageNumber)
-  {/* <input
-                type="checkbox"
-                onChange={(event) => selectAll(event.target.checked)}
-                checked={checkedAll}
-            />
-
-            <input
-                type="checkbox"
-                name="nr1"
-                onChange={() => toggleCheck("nr1")}
-                checked={checked["nr1"]}
-            /> */}
-            {/* {renderCheckboxes} */}
-
-            {/* <input
-          type="checkbox"
-          name="nr2"
-          onChange={() => toggleCheck("nr2")}
-          checked={checked["nr2"]}
-        /> */}
-
-
-          // const toggleCheck = (inputName) => {
-    //     setChecked((prevState) => {
-    //         const newState = { ...prevState };
-    //         newState[inputName] = !prevState[inputName];
-    //         return newState;
-    //     });
-    // };
-
-    // const selectAll = (value) => {
-    //     setCheckedAll(value);
-    //     setChecked((prevState) => {
-    //         const newState = { ...prevState };
-    //         for (const inputName in newState) {
-    //             newState[inputName] = value;
-    //         }
-    //         return newState;
-    //     });
-    // };
-
-    /* ############################################# */
-    /* #### EFFECT TO CONTROL CHECKED_ALL STATE #### */
-    /* ############################################# */
-
-    // IF YOU CHECK BOTH INDIVIDUALLY. IT WILL ACTIVATE THE checkedAll STATE
-    // IF YOU UNCHECK ANY INDIVIDUALLY. IT WILL DE-ACTIVATE THE checkAll STATE
-
-  
-    // const renderCheckboxes = listItem && listItem.map((box, i) => (
-    //     <input
-    //             key={i}
-    //             type="checkbox"
-    //             name={box.id}
-    //             onChange={() => toggleCheck(box.id)}
-    //             checked={checked[box.id]}
-    //         />
-    // ))
-
-

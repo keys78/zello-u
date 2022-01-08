@@ -63,7 +63,7 @@ const NavFilter = () => {
                         <NavFilterBtn buttons={buttons} filter={filter} />
                         <h1>Total Payable amount: <span className='totalPay'>{'$'}{totalPayableAmount()}</span> USD</h1>
                     </DFlexer>
-                    <Menu searchTerm={searchTerm} setSearchTerm={setSearchTerm} listItem={listItem} setListItem={setListItem} />
+                    <Menu searchTerm={searchTerm} setSearchTerm={setSearchTerm} listItem={listItem && listItem} setListItem={setListItem} />
                 </NavFilterContainer>
             }
         </>
