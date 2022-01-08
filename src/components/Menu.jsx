@@ -8,7 +8,7 @@ import SingleUser from './SingleUser'
 import TableHead from './TableHead'
 
 const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
-    const keepArr = listItem && listItem.map((user) => user.id)
+    // const keepArr = listItem && listItem.map((user) => user.id)
     // console.log(keepArr)
     // const obj = keepArr &&  keepArr.reduce((ac,a) => ({...ac,[a]:false}),{});
     // const checkedObj = keepArr && keepArr.reduce((acc,curr)=> (acc[curr]=false,acc),{});
