@@ -20,11 +20,11 @@ const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
     const currentUsers = listItem && listItem.slice(indexOfFirstUser, indexOfLastUser)
     const totalPages = listItem && listItem.length / usersPerPage
 
-    // useEffect(() => {
-    //     if(totalPages === 1) {
-    //         setCurrentPage(1)
-    //     }
-    // }, [totalPages])
+    useEffect(() => {
+        if(totalPages === 1) {
+            setCurrentPage(1)
+        }
+    }, [currentUsers])
 
     const prev = () => {
         currentPage <= 1 ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1)

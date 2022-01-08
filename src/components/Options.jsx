@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -11,6 +11,7 @@ import {
     useDeleteUserMutation,
     useGetUsersQuery
 } from '../services/usersApi'
+
 
 const Options = ({ user, i }) => {
     const [deactivateUser] = useDeactivateUserMutation({ id: user.id });
@@ -53,13 +54,19 @@ const Options = ({ user, i }) => {
         toggleOptions();
     }
 
+    // useEffect(() => {
+    //     const closeIsOptions = e => {
+    //         setIsOptionsOpen(false)
+    //     }
+
+    //     document.body.addEventListener('click', closeIsOptions);
+    // })
+
 
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
     const toggleOptions = () => {
         setIsOptionsOpen(!isOptionsOpen)
     }
-
-    // const [activeOptions, setActiveOptions] = useState()
 
 
     return (
