@@ -5,7 +5,6 @@ function NavFilterBtn({buttons, filter}) {
     const ledo = ({status, i}) => {
         filter(status)
         setActive(i)
-        console.log(i)
     }
 
 

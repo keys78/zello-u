@@ -6,40 +6,13 @@ import PayDues from './PayDues'
 import SearchBar from './SearchBar'
 import SingleUser from './SingleUser'
 import TableHead from './TableHead'
+import { useGetUsersQuery } from '../services/usersApi'
 
 const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
-    // const keepArr = listItem && listItem.map((user) => user.id)
-    // console.log(keepArr)
-    // const obj = keepArr &&  keepArr.reduce((ac,a) => ({...ac,[a]:false}),{});
-    // const checkedObj = keepArr && keepArr.reduce((acc,curr)=> (acc[curr]=false,acc),{});
-    // console.log(obj)
-    
+    const { data } = useGetUsersQuery()
     const [checkedAll, setCheckedAll] = useState(false);
-    // const [checked, setChecked] = useState({});
-    const [checked, setChecked] = useState({
-        731: false,
-        732: false,
-        733: false,
-        734: false,
-        735: false,
-        736: false,
-        737: false,
-        738: false,
-        739: false,
-        740: false,
-        741: false,
-        742: false,
-        743: false,
-        744: false,
-        745: false,
-        746: false,
-        747: false,
-        748: false,
-        749: false,
-        750: false
-    });
-
-  
+    const [checked, setChecked] = useState('');
+   
     const [currentPage, setCurrentPage] = useState(1);
     const [usersPerPage, setUsersPerPage] = useState(5);
     const indexOfLastUser = currentPage * usersPerPage;
@@ -47,25 +20,15 @@ const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
     const currentUsers = listItem && listItem.slice(indexOfFirstUser, indexOfLastUser)
     const totalPages = listItem && listItem.length / usersPerPage
 
-    // useEffect(() => {
-    //     setChecked(keepArr && keepArr.reduce((acc,curr)=> (acc[curr]=false,acc),{}))
-    // }, [])
     useEffect(() => {
-        if(totalPages === 1) {
-            setCurrentPage(1)
+        function getObjkeys () {
+            const keepArr = data?.data.map((user) => user.id)
+            const obj = data &&  keepArr.reduce((ac,a) => ({...ac,[a]:false}),{})
+            return obj
         }
-        
-    }, [currentUsers])
-
-    
-    const prev = () => {
-        currentPage <= 1 ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1)
-    }
-
-    const next = () => {
-        currentPage < totalPages && setCurrentPage(currentPage + 1)
-    }
-
+        setChecked(getObjkeys)
+    }, [])
+    useEffect(() => { if(totalPages === 1) { setCurrentPage(1)}}, [currentUsers])
     useEffect(() => {
         let allChecked = true;
         for (const inputName in checked) {
@@ -80,6 +43,17 @@ const Menu = ({ listItem, setListItem, searchTerm, setSearchTerm }) => {
         }
        
       }, [checked]);
+
+    
+    const prev = () => {
+        currentPage <= 1 ? setCurrentPage(currentPage) : setCurrentPage(currentPage - 1)
+    }
+
+    const next = () => {
+        currentPage < totalPages && setCurrentPage(currentPage + 1)
+    }
+
+   
 
 
     return (

@@ -13,7 +13,6 @@ const PayDues = ({ checked, listItem }) => {
         for (const [key, value] of Object.entries(checked)) {
             if (value === true) {
                 newArr.push(key)
-                console.log('newArr', newArr)
             }
         }
 
@@ -29,13 +28,15 @@ const PayDues = ({ checked, listItem }) => {
             
 
            newArr.forEach(el => {
-                refetch();
+               listItem && listItem.map(user => user.id)
                 markPaid(el)
                 alert(`${el} has paid`)
                 window.location.reload()
                 
             })
-            window.location.reload()
+            if(newArr.length === 0) {
+                alert('No user is selected')
+            }
         // })
         
     }

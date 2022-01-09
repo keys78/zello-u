@@ -3,12 +3,14 @@ import styled from 'styled-components'
 import Menu from './Menu'
 import NavFilterBtn from './NavFilterBtns'
 import { useGetUsersQuery } from '../services/usersApi'
+import Loader from './Loader'
 
 
 const NavFilter = () => {
     const { data, error, isLoading, isSuccess, isError } = useGetUsersQuery();
     const allUsers = isSuccess && data?.data
     const allCategories = ['All', 'paid', 'unpaid', 'overdue'];
+    
 
 
     const [listItem, setListItem] = useState(allUsers);
@@ -55,7 +57,7 @@ const NavFilter = () => {
 
     return (
         <>
-            {isLoading && "Loading......"}
+            {isLoading && <Loader />}
             {error && <span>{error.status}</span>}
             {isSuccess && !isError &&
                 <NavFilterContainer>

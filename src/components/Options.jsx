@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -37,43 +37,40 @@ const Options = ({ user, i }) => {
         } 
       
         refetch();
-        toggleOptions();
+       setIsOptionsOpen(!isOptionsOpen)
     }
 
     const handlePaymentStatus = async () => {
         user.paymentStatus === "unpaid" ? await markPaid(user.id) : await markUnpaid(user.id)
         refetch();
         alert(`${user.firstName} is marked`)
-        toggleOptions();
+       setIsOptionsOpen(!isOptionsOpen)
     }
     const singleUserStatus = user.userStatus === "active" ? "Deactivate User" : "Activate User"
     const paymentStatus = user.paymentStatus === "paid" ? "Mark Unpaid" : "Mark Paid"
 
     const showProfile = () => {
         alert(`${user.firstName} ${user.lastName} is ${user.paymentStatus}`)
-        toggleOptions();
+       setIsOptionsOpen(!isOptionsOpen)
     }
     
-    
-
-    // useEffect(() => {
-    //     // document.body.addEventListener('mousedown', () => {
-    //     //     setIsOptionsOpen(!isOptionsOpen)
-    //     // });
-    // })
-
-
     const [isOptionsOpen, setIsOptionsOpen] = useState(false)
-    const toggleOptions = () => {
-        setIsOptionsOpen(!isOptionsOpen)
-    }
+    const optionsRef = useRef()
+    useEffect(() => { document.body.addEventListener('mousedown', handleClickOutside) })
+
+    const handleClickOutside = (event) => {
+          optionsRef.current && !optionsRef.current.contains(event.target) && setIsOptionsOpen(false)
+    };
+
+    
+   
 
 
     return (
         <>
          <ToastContainer position="top-right" />
         <div className='relative'>
-            <img onClick={toggleOptions}
+            <img onClick={() => setIsOptionsOpen(!isOptionsOpen)}
                 src="./assets/More.png"
                 alt="morebtn"
                 className='vire cursor-pointer'
@@ -82,12 +79,14 @@ const Options = ({ user, i }) => {
             <AnimatePresence>
                 
                 {isOptionsOpen && <ViewMoreModal
+                    ref={optionsRef}
+                    className='container'
                     initial={{ y: -10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 10, opacity: 0 }}
                     transiton={{ type: 'spring', duration: 0.2 }}
                 >
-                    <div onClick={toggleOptions}
+                    <div onClick={() => setIsOptionsOpen(!isOptionsOpen)}
                         className='rounded-full cursor-pointer p-2 bg-white absolute -top-3 -right-3'>
                         <img src="./assets/Close.png" />
                     </div>
