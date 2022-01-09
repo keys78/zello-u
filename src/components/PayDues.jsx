@@ -2,21 +2,35 @@ import React from 'react'
 import styled from 'styled-components'
 import { useMarkPaidMutation } from '../services/usersApi'
 import { useGetUsersQuery } from '../services/usersApi'
+import { ToastContainer, toast } from 'react-toastify';
+
+
 
 const PayDues = ({ checked, listItem }) => {
     const { refetch } = useGetUsersQuery()
     const [markPaid] = useMarkPaidMutation()
+    const noUserAlert = () => toast(`No User Selected`)
+    const alertPaid = (el) => toast(`${el} has paid`)
 
-    const handlePaid = () => {
+    function handlePaid() {
         const newArr = []
 
         for (const [key, value] of Object.entries(checked)) {
             if (value === true) {
                 newArr.push(key)
             }
+            refetch();
         }
 
-        // listItem.find((user) => {
+       
+        newArr.forEach(el => {
+            markPaid(el)
+            alertPaid(el);
+        })
+
+        newArr.length === 0 && noUserAlert();
+
+          // listItem.find((user) => {
         //     if (newArr.includes(user.id)) {
         //         if (user.paymentStatus === "unpaid") {
         //             markPaid(user.id)
@@ -25,27 +39,22 @@ const PayDues = ({ checked, listItem }) => {
         //             alert(`${user.firstName} ${user.lastName} already marked paid`);
         //         }
         //     }
-            
-
-           newArr.forEach(el => {
-               listItem && listItem.map(user => user.id)
-                markPaid(el)
-                alert(`${el} has paid`)
-                window.location.reload()
-                
-            })
-            if(newArr.length === 0) {
-                alert('No user is selected')
-            }
         // })
-        
+
     }
-    
+
 
     return (
-        <DuesBtn onClick={handlePaid}>
-            <h1>PAY DUES</h1>
-        </DuesBtn>
+        <>
+            <ToastContainer
+                position="top-right"
+                autoClose={1000}
+                hideProgressBar={true}
+            />
+            <DuesBtn onClick={handlePaid}>
+                <h1>PAY DUES</h1>
+            </DuesBtn>
+        </>
     )
 }
 

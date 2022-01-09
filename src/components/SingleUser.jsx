@@ -44,7 +44,6 @@ const SingleUser = ({ listItem, checked, setChecked, setCheckedAll, checkedAll }
     setChecked((prevState) => {
       const newState = { ...prevState };
       newState[inputName] = !prevState[inputName];
-      console.log(newState)
       return newState;
     });
   };
